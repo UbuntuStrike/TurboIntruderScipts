@@ -1,14 +1,14 @@
 Turbo Intruder scripts
 
-example for InjectEncodeB64:
+example for InjectEncodeB64: 
 
-POST /api/login HTTP/1.1
+POST /api/login HTTP/1.1 
 
-Host: target.com
+Host: target.com 
 
-Content-Type: application/json
+Content-Type: application/json 
 
-Content-Length:
+Content-Length: ... 
 
 {
 
@@ -16,5 +16,4 @@ Content-Length:
     
     "password": "password"
     
-
 }
