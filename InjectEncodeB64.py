@@ -44,5 +44,4 @@ def encode_selected_region(request):
     return pre + encoded_part + post
 
 def handleResponse(req, interesting):
-    if b"something_interesting" in req.response:
-        table.add(req)
+    table.add(req)
