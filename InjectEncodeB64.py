@@ -1,13 +1,23 @@
 from base64 import b64encode
 
-def queueRequests(target, wordlists):
+def queueRequests(target, wordlists):  # Ignoring Burp's built-in wordlists
     engine = RequestEngine(endpoint=target.endpoint,
                            concurrentConnections=5,
                            requestsPerConnection=100,
                            pipeline=False
                            )
 
-    for word in wordlists['default']:
+    # Path to your wordlist file (relative to Burp or absolute)
+    wordlist_path = '/full/path/to/your/wordlist.txt'  # <-- CHANGE THIS
+
+    try:
+        with open(wordlist_path, 'r') as f:
+            payloads = [line.strip() for line in f if line.strip()]
+    except Exception as e:
+        print('Failed to load wordlist:', e)
+        return
+
+    for word in payloads:
         # Insert the payload
         modified = target.req.replace(b'§PAYLOAD§', word.encode())
 
@@ -35,5 +45,4 @@ def encode_selected_region(request):
 
 def handleResponse(req, interesting):
     if b"something_interesting" in req.response:
-        tabl
-e.add(req)
+        table.add(req)
