@@ -11,8 +11,10 @@ Content-Type: application/json
 Content-Length:
 
 {
+
     "username": "§ENCODE_START§admin§PAYLOAD§123§ENCODE_END§",
     
     "password": "password"
+    
 
 }
