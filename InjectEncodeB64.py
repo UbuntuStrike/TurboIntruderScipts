@@ -8,7 +8,7 @@ def queueRequests(target, wordlists):  # Ignoring Burp's built-in wordlists
                            )
 
     # Path to your wordlist file (relative to Burp or absolute)
-    wordlist_path = '/full/path/to/your/wordlist.txt'  # <-- CHANGE THIS
+    wordlist_path = '/path/to/wordlist.txt'  # <-- CHANGE THIS
 
     try:
         with open(wordlist_path, 'r') as f:
