@@ -1,4 +1,4 @@
-#This turbo Intruder script is used to inject payloads into a POST request, then makes a get request to a seperate URL. Ideal for when the POST data is reflected in a different web page.
+# This turbo Intruder script is used to inject payloads into a POST request, then makes a get request to a seperate URL. Ideal for when the POST data is reflected in a different web page.
 # Turbo Intruder script: Send POST requests with payloads from a file,
 # then follow each with a GET request, and log all 200 OK responses.
 
