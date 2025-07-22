@@ -1,9 +1,8 @@
 # This turbo Intruder script is used to inject payloads into a POST request, then makes a get request to a seperate URL. Ideal for when the POST data is reflected in a different web page.
-# Turbo Intruder script: Send POST requests with payloads from a file,
-# then follow each with a GET request, and log all 200 OK responses.
+# Turbo Intruder script to send a payload-injected request (with %s placeholder),
+# followed by a GET request to another page.
 
 def queueRequests(target, wordlists):
-    # Create the request engine to manage concurrent connections
     engine = RequestEngine(
         endpoint=target.endpoint,
         concurrentConnections=5,
@@ -11,32 +10,28 @@ def queueRequests(target, wordlists):
         pipeline=False
     )
 
-    # Load payloads from an external wordlist file
+    # Load payloads from external file
     with open('/path/to/wordlist.txt', 'r') as f:
         payloads = [line.strip() for line in f]
 
+    # Use the base request you sent from Burp, which should contain `%s`
+    base = target.baseRequest.decode()
+
     for payload in payloads:
-        # === UPDATE: Replace "/submit" with your actual POST endpoint ===
-        post_req = """POST /submit HTTP/1.1
-Host: example.com
-Content-Type: application/json
-Content-Length: {length}
+        # Replace the %s placeholder in the original request with the payload
+        attack_request = base.replace('%s', payload)
 
-{{"input": "{}"}}""".format(payload)
+        # Send the original request with payload
+        engine.queue(attack_request)
 
-        # === UPDATE: Replace "/results" with your actual GET endpoint ===
-        get_req = """GET /results HTTP/1.1
+        # === Modify this path as needed — this is the follow-up GET request ===
+        followup_get = """GET /results HTTP/1.1
 Host: example.com
 
 """
+        engine.queue(followup_get)
 
-        # Queue both the POST and GET requests for each payload
-        engine.queue(post_req)
-        engine.queue(get_req)
-
-# Add any response to the results table if it returns HTTP 200
+# Add responses to the results table if HTTP 200
 def handleResponse(req, interesting):
-    # Check if the response has a 200 OK status code
     if req.status == 200:
-        table.
-        add(req)
+        table.add(req)
